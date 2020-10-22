@@ -1,27 +1,22 @@
-[user]
-	email = xueguang668@163.com
-	name = fengxueguang
-
 #全局的配置
 # core {{{
 [core]
     quotepath = false 
-	autocrlf = false #自动换行
+    autocrlf = false #自动转换换行符
     repositoryformatversion = 0
-	filemode = false
-	bare = false
-	logallrefupdates = true
-	ignorecase = false
-    editor = /usr/bin/vim
-    excludesfile = /Users/npaolucci/.gitignore_global
-    pager=less -x4
+    filemode = true  #文件权限
+    bare = false
+    logallrefupdates = true
+    ignorecase = false
+	pager = less -F -X
     preloadindex = true
     fscache = true
+	safecrlf = true
 
 #}}}
 # color {{{
 [color]
-     ui = true
+	ui = true
 [color "diff"]
         meta = yellow bold
         frag = magenta bold
@@ -52,7 +47,7 @@
 # }}}
 # push/pull/diff/options {{{
 [push]
-    default = simple
+	default = upstream
 [diff]
   memonicprefix = true
 
@@ -65,7 +60,7 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 
 # }}}
@@ -75,12 +70,14 @@
 
     cl = clone
 
-    ci = commit
-    cm = commit -m
-    cma = commit -a -m
-    ca = commit --amend
+    ci = commit -v -s
+    cm2 = commit -v -s -m 
+    cma2 = commit -v -s -a -m 
+    cma = "!f() { curBranch=$(git symbolic-ref --short -q HEAD) && git commit -a -m \"$curBranch:$1\"; }; f"
+    cm = "!f() {  curBranch=$(git symbolic-ref --short -q HEAD) && git commit -v -m \"$curBranch:$1\"; }; f"
+    ca = commit  --amend
     amend = commit --amend
-    caa = commit -a --amend -C HEAD
+    caa = commit -a  --amend -C HEAD
     filelog = log -u
     fl = log -u
 
@@ -91,9 +88,24 @@
     #"!git branch -ra | grep -v done"
     bra = branch -ra
     #list commands
+    l5="log --oneline --graph -n5"
+    l10="log --oneline --graph -n10"
+    l20="log --oneline --graph -n20"
+    l100="log --oneline --graph -n100"
+    l111="log --oneline --graph"
     lg1 = "log --all --pretty=oneline --decorate=full  --graph --branches --abbrev-commit"
-    lg2 = "log --all --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative --show-signature --branches"
-    lg = "log --graph --all --branches --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(auto)%d%C(reset)'"
+#原来的
+# lg2 = "log --all --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)—%an%C(reset)%C(bold yellow)%C(auto)%d%C(reset)' --abbrev-commit --date=relative --show-signature --branches"
+    lgthis = "log --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(yellow)—%an%C(reset)%C(bold yellow)%C(auto)%d% ' --abbrev-commit --date=relative"    
+lg2 = "log --all --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(yellow)—%an%C(reset)%C(bold yellow)%C(auto)%d%C(reset)' --abbrev-commit --date=relative --branches"
+    lg21 = "log --all --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%s%C(reset)%C(yellow) |%an%C(reset)%C(bold yellow)%C(auto)%d%C(reset)' --abbrev-commit --date=relative --branches"
+#可以显示日期  年月日时分秒
+    lgt = "log --graph --all --branches --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ai)%C(reset) %C(white)%s%C(reset) %C(auto)%d%C(reset)'"
+    # 里面加入的东西最多了  两种日期都显示  ,名字显示,还有那个分支的颜色稍微有些不同,可以明确的看出来是哪个分支的
+    lgall ="log --graph --all --branches --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold green)(%ai)%C(reset) %C(white)%s%C(reset) %C(yellow) - %an%C(reset)%C(auto) %d%C(reset)'"
+# no merge
+    lgnm = "log --graph --all --branches --no-merges --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(auto)%d%C(reset)'"
+    lg = "log --graph --all --branches --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)【%an】 %C(auto)%d%C(reset)'"
     le = log --oneline --decorate
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     ls1 = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
@@ -103,8 +115,13 @@
     lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
     #list all aliases
     la = "!git config -l | grep alias | cut -c 7-"
-    diff = diff --word-diff
-    d = diff --word-diff
+    #d = diff --word-diff
+    d =  ! "echo '***********************************************************************' && git diff --word-diff --stat && echo '' && echo ======================================================================= && git diff --word-diff"
+    
+    df = diff
+    dfn = diff --no-index
+ #   df =  ! "echo '***********************************************************************' && git diff --stat && echo '' && echo ======================================================================= && git diff"
+  #  dc =  ! "echo '***********************************************************************' && git diff --cached --stat && echo '' && echo ======================================================================= && git diff --cached"
     dc = diff --cached
     #list modified files in last commit
     dl = "!git ll -1"
@@ -112,7 +129,7 @@
     dlc = diff --cached HEAD^
     dr  = "!f() { git diff -w "$1"^.."$1"; }; f"
     diffr  = "!f() { git diff "$1"^.."$1"; }; f"
-    branch = branch -ra
+    branchall = branch -ra
 
     #reset commands
     r = reset
@@ -123,18 +140,21 @@
     rh2 = reset HEAD^^ --hard
 
     #git svn
+    svnf = svn fetch
     svnr = svn rebase
     svnd = svn dcommit
     svnl = svn log --oneline --show-commit
-
+    
     #stash
     sl = stash list
     sa = stash apply
     ss = stash save
 
+    pl = pull
+ 
     cp = cherry-pick
-    grep = grep -Ii
-    gr = grep -Ii
+    grep = grep -Iin
+    gr = grep -Iin
     #grep from root folder
     gra = "!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f"
 
@@ -142,7 +162,7 @@
     f = "!git ls-files | grep -i"
 
     #rename branch tree to done-
-    done = "!f() { git branch | grep "$1" | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
+    #done = "!f() { git branch | grep "$1" | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
 
     #assume aliases
     assume = update-index --assume-unchanged
@@ -155,7 +175,7 @@
 
     lasttag = describe --tags --abbrev=0
     lt = describe --tags --abbrev=0
-
+    tagl = tag -l -n10
     #merges
     ours = "!f() { git co --ours $@ && git add $@; }; f"
     theirs = "!f() { git co --theirs $@ && git add $@; }; f"
@@ -174,17 +194,31 @@
     #add bitbucket remote
     ra = "!f() { git remote add $1 https://bitbucket.org/$2.git; }; f"
 
+    ph =  ! "git pull && git push"
     #merge to  合并到master合并到dev
-    mtomaster =! "currBranch=$(git status|grep 位于分支) && currBranch=${currBranch/位于分支/} &&git checkout master && git merge --no-ff $currBranch -m \"Merge branch '"$currBranch"' \" && git push && git checkout $currBranch"
+    mtomaster =! "currBranch=$(git symbolic-ref --short -q HEAD) &&git checkout master && git pull && git merge  $currBranch -m \"Merge branch '"$currBranch"' \" && git push && git checkout $currBranch"
     #合并到dev
-    mtodev =! "currBranch=$(git status|grep 位于分支) && currBranch=${currBranch/位于分支/} &&git checkout develop && git merge --no-ff $currBranch -m \"Merge branch '"$currBranch"' to develop \" && git push && git checkout $currBranch"
+    mtodev =! "currBranch=$(git symbolic-ref --short -q HEAD) &&git checkout dev && git pull && git merge  $currBranch -m \"Merge branch '"$currBranch"' to dev \" && git push && git checkout $currBranch"
+    #合并到test
+    mtotest =! "currBranch=$(git symbolic-ref --short -q HEAD) &&git checkout test && git pull && git merge  $currBranch -m \"Merge branch '"$currBranch"' to test \" && git push && git checkout $currBranch"
     #自定义合并到那里
-    mergeto =! "currBranch=$(git status|grep 位于分支) && currBranch=${currBranch/位于分支/} &&git checkout $1 && git merge --no-ff $currBranch -m \"Merge branch '"$currBranch"' to $1 \" &&  git push && git checkout $currBranch && echo $currBranch--合并到了==$1"
-    
+    mergeto =! "currBranch=$(git symbolic-ref --short -q HEAD) &&git checkout $1 && git pull && git merge $currBranch -m \"Merge branch '"$currBranch"' to $1 \" &&  git push && git checkout $currBranch && echo $currBranch--合并到了==$1"
+    di-list = "!f() { ver=${1:-1};git --no-pager diff --name-only HEAD~${ver}; }; f"
+    di-join-list = "!f() { ver=${1:-1};git --no-pager diff --name-only HEAD~${ver} | xargs; }; f"
     bs = ! "echo '***********************************************************************' && git branch -vv && echo '' && echo ======================================================================= && echo '' && git status -s && echo '' && echo '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&' && echo '' "
+    acp =! "git add . && git commit -m $1 && git push"
 
 # }}}
 [rerere]
-	enabled = true
+    enabled = true
 [status]
-	submodulesummary = false
+    submodulesummary = false
+[user]
+	name = fengxueguang
+	email = fengxueguang@360.cn
+[http]
+	sslVerify = false
+[help]
+    format = web
+[web]
+    browser = open
