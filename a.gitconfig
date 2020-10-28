@@ -214,8 +214,8 @@ lg2 = "log --all --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold gre
 [status]
     submodulesummary = false
 [user]
-	name = fengxueguang
-	email = fengxueguang@360.cn
+	name = xxxx
+	email = xxxxxxxxx@xx.com
 [http]
 	sslVerify = false
 [help]
