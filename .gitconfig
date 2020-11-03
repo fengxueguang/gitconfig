@@ -66,6 +66,13 @@
 # }}}
 # alias {{{
 [alias]
+    sw = switch
+    rs = restore --worktree  # 默认的就是worktree
+    rsw = restore --worktree  # 默认的就是worktree
+    rss = restore --stage
+    rsa = restore --source HEAD --stage --worktree # a == all 表示用HEAD的中的文件重置暂存区和工作区的内容
+
+
     st = status -s
 
     cl = clone
@@ -105,7 +112,9 @@ lg2 = "log --all --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold gre
     lgall ="log --graph --all --branches --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold green)(%ai)%C(reset) %C(white)%s%C(reset) %C(yellow) - %an%C(reset)%C(auto) %d%C(reset)'"
 # no merge
     lgnm = "log --graph --all --branches --no-merges --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(auto)%d%C(reset)'"
-    lg = "log --graph --all --branches --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)【%an】 %C(auto)%d%C(reset)'"
+ #   lg = "log --graph --all --branches --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(yellow)%an%C(reset) %C(auto)%d%C(reset)'"
+lg = "log --graph --all --branches --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)%an %C(auto)%d%C(reset)'"
+lgauto = "log --graph --all --branches --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(auto)%an %C(auto)%d%C(reset)'"
     le = log --oneline --decorate
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     ls1 = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
@@ -119,6 +128,7 @@ lg2 = "log --all --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold gre
     d =  ! "echo '***********************************************************************' && git diff --word-diff --stat && echo '' && echo ======================================================================= && git diff --word-diff"
     
     df = diff
+    dfs = diff --ignore-space-change
     dfn = diff --no-index
  #   df =  ! "echo '***********************************************************************' && git diff --stat && echo '' && echo ======================================================================= && git diff"
   #  dc =  ! "echo '***********************************************************************' && git diff --cached --stat && echo '' && echo ======================================================================= && git diff --cached"
@@ -215,10 +225,11 @@ lg2 = "log --all --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold gre
     submodulesummary = false
 [user]
 	name = xxxx
-	email = xxxxxxxxx@xx.com
+	email = xxxx
 [http]
 	sslVerify = false
 [help]
-    format = web
+	format = html
+	htmlpath = /xxxx/git-doc
 [web]
     browser = open
