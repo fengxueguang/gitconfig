@@ -9,27 +9,27 @@
     bare = false
     logallrefupdates = true
     ignorecase = false
-	pager = less -F -X
+    pager = less -F -X
     preloadindex = true
     fscache = true
-	safecrlf = true
+    safecrlf = true
 
 #}}}
 # color {{{
 [color]
-	ui = true
+    ui = true
 [color "diff"]
-        meta = yellow bold
-        frag = magenta bold
-        old = red bold
-        new = green bold
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
 #[color]
  #   branch = auto
  #   diff = auto
-#    status = auto
+ #   status = auto
 
 [color "branch"]
-#    current = red reverse
+   #current = red reverse
     local = white
     remote = blue
 
@@ -41,11 +41,12 @@
     plain = white
 
 [color "status"]
-  added = green
-  changed = red
-  untracked = cyan
+    added = green
+    changed = red
+    untracked = cyan
 
 # }}}
+
 # push/pull/diff/options {{{
 [push]
 	default = upstream
@@ -56,6 +57,7 @@
   whitespace = nowarn
 
 #}}}
+
 # difftools {{{
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
@@ -65,6 +67,7 @@
 	trustExitCode = true
 
 # }}}
+
 # alias {{{
 [alias]
     sw = switch
@@ -220,8 +223,11 @@ lgauto = "log --graph --all --branches --format=format:'%C(bold blue)%h%C(reset)
     acp =! "git add . && git commit -m $1 && git push"
 
 # }}}
+
+# 冲突相关
 [rerere]
     enabled = true
+
 [status]
     submodulesummary = false
 [user]
